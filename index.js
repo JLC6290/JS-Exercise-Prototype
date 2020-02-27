@@ -86,6 +86,9 @@ Car.prototype.drive = function (distance) {
   for (let i = 0; i < distance; i++) {
     if (i % this.milesPerGallon === 0) {
       this.tank--;
+      if(this.tank < 0){
+        this.tank = 0;
+      }
     }
     if(i < range){
       this.odometer++;
