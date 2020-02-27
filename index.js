@@ -83,18 +83,27 @@ Car.prototype.fill = function (gallons) {
 }
 Car.prototype.drive = function (distance) {
   let range = this.tank * this.milesPerGallon;
-  for (let i = 0; i < distance; i++) {
-    if (i % this.milesPerGallon === 0) {
-      this.tank--;
-      if(this.tank < 0){
-        this.tank = 0;
-      }
-    }
-    if(i < range){
-      this.odometer++;
-    }
+  // for (let i = 0; i < distance; i++) {
+  //   if (i % this.milesPerGallon === 0) {
+  //     this.tank--;
+  //     if(this.tank < 0){
+  //       this.tank = 0;
+  //     }
+  //   }
+  //   if(i < range){
+  //     this.odometer++;
+  //   }
+  // }
+  if(distance <= range){
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - distance / this.milesPerGallon;
   }
-  return `I ran out of fuel at ${this.odometer} miles!`
+  else {
+    this.odometer = this.odometer + range;
+    this.tank = 0;
+    return `I ran out of fuel at ${this.odometer} miles!`
+  }
+  
 }
 
 /*
@@ -119,10 +128,10 @@ Baby.prototype.play = function () {
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Global binding: The default binding JS will utilize if no other is met. "this" will bind only to objects defined in the global scope.
+  2. Implicit binding: When "this" is invoked within an object, it will implicitly refer to said object. 
+  3. Explicit binding: When "this" is invoked as a function (read: not a method, as it is defined outside of the object) it must be explicitly called by using the ".call" property. It can also be called
+  4. New binding: When "this" is invoked within a method of a constructor function, it is bound to the creation of new objects by the constructor function by using the "new" keyword when the constructor function is invoked.
 */
 
 
@@ -136,3 +145,17 @@ if (typeof exports !== 'undefined') {
   if (Car) { module.exports.Car = Car }
   if (Baby) { module.exports.Baby = Baby }
 }
+
+class Pokemon {
+  constructor(attrs) {
+    this.name = attrs.name
+  }
+  speak=()=> {
+    console.log(`Hi my name is ${this.name}`);
+  }
+}
+
+const mankey = new Pokemon({
+  name: "mankey"
+});
+mankey.speak();
