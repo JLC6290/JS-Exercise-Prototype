@@ -42,8 +42,8 @@ Airplane.prototype.land = function () {
 function Person(name, age) {
 
   this.name = name,
-  this.age = age,
-  this.stomach = [];
+    this.age = age,
+    this.stomach = [];
 }
 Person.prototype.eat = function (someFood) {
   if (this.stomach.length < 10) {
@@ -74,19 +74,24 @@ Person.prototype.toString = function () {
 
 function Car(model, milesPerGallon) {
   this.model = model,
-  this.milesPerGallon = milesPerGallon,
-  this.tank = 0,
-  this.odometer = 0
+    this.milesPerGallon = milesPerGallon,
+    this.tank = 0,
+    this.odometer = 0
 }
-Car.prototype.fill = function(gallons) {
+Car.prototype.fill = function (gallons) {
   this.tank = this.tank + gallons;
 }
-Car.prototype.drive = function(distance) {
-  this.odometer = distance;
-  this.tank = this.tank - (distance / this.milesPerGallon);
-  if(this.tank < this.milesPerGallon) {
-    return `I ran out of fuel at ${this.odometer} miles!`
+Car.prototype.drive = function (distance) {
+  let range = this.tank * this.milesPerGallon;
+  for (let i = 0; i < distance; i++) {
+    if (i % this.milesPerGallon === 0) {
+      this.tank--;
+    }
+    if(i < range){
+      this.odometer++;
+    }
   }
+  return `I ran out of fuel at ${this.odometer} miles!`
 }
 
 /*
@@ -100,10 +105,10 @@ Car.prototype.drive = function(distance) {
 
 function Baby(name, age, favoriteToy) {
   Person.call(this, name, age, favoriteToy);
-   this.favoriteToy = favoriteToy;
+  this.favoriteToy = favoriteToy;
 }
 Baby.prototype = Object.create(Person.prototype);
-Baby.prototype.play = function() {
+Baby.prototype.play = function () {
   return `Playing with ${this.favoriteToy}`
 }
 
